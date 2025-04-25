@@ -43,7 +43,6 @@ def load_data():
 
 # Colours generator
 def generate_rainbow_hex_colours(n: int) -> list[str]:
-
     hex_colors = []
     for i in range(n):
         hue = i / n  # Hue from 0.0 to 1.0
@@ -125,7 +124,13 @@ def prepare_graph(selected_ingredient):
             opacity = source_opacity
 
         graph.add_edge(
-            source=src, to=tgt, color=color, arrows="to", physics=False, opacity=opacity
+            source=src,
+            to=tgt,
+            color=color,
+            arrows="to",
+            smooth={"type": "cubicBezier", "roundness": 0.5},
+            physics=False,
+            opacity=opacity,
         )
 
     return graph
