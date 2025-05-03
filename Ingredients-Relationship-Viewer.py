@@ -16,7 +16,7 @@ class AppState:
     node_positions = {}
     node_colors = {}
     highlight_color = "#FF5733"
-    faded_opacity = 0.5
+    faded_opacity = 0.1
     radius = 600
 
 
@@ -92,7 +92,7 @@ def prepare_graph(selected_ingredient):
             if (not relevant_nodes or effect_id in relevant_nodes)
             else AppState.faded_opacity
         )
-        color = AppState.node_colors.get(effect_id, "#3498db")
+        color = AppState.node_colors.get(effect_id, "#aaaaaa")
         graph.add_node(
             n_id=effect_id,
             label=label,
@@ -118,10 +118,9 @@ def prepare_graph(selected_ingredient):
         )
         if not highlight:
             # match arrow opacity to source node
-            source_opacity = (
+            opacity = (
                 AppState.faded_opacity if src not in relevant_nodes else 1.0
             )
-            opacity = source_opacity
 
         graph.add_edge(
             source=src,
@@ -138,7 +137,8 @@ def prepare_graph(selected_ingredient):
 
 # === Draw Graph with PyVis ===
 def draw_graph(selected_ingredient, graph_html_path="graph.html"):
-    graph = prepare_graph(selected_ingredient)
+    # graph = prepare_graph(selected_ingredient)
+    graph = prepare_graph("Cuke")
     graph.write_html(graph_html_path, notebook=False, open_browser=False)
     with open(graph_html_path, "r", encoding="utf-8") as f:
         html_content = f.read()
